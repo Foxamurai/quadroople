@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Quadroople</string>
+    <!--Login activity text-->
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="create_new_account">Create New Account</string>
+    <!--Registration activity text-->
+    <string name="username">Username</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!--Anek-->
+    <string name="anek">Парень каждый день перед сном писал своей любимой сообщения «я тебя люблю».
+        В одну ночь девушке приходит опять сообщение.
+        Она, промолвив про себя: «эх, устала каждую ночь читать одно и то же» и не открывая сообщения, легла спать.
+        На утро звонит мать парня девушке и говорит: «приходи, он скончался».
+        Девушка бросается к мобильному, открывает сообщение, а там написано:
+        «представь, я ща поле чудес смотрел,
+        там у якубовича капуста в усах застряла,
+        и он такой как индюк ею трясёт брлрлрблрлбр
+        аахахахахах жесть я щас умру».</string>
+</resources>
