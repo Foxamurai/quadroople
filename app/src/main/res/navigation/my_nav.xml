@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/createRouteFragment">
+    <fragment
+        android:id="@+id/createRouteFragment"
+        android:name="com.example.quadroople.CreateRouteFragment"
+        android:label="fragment_create_route"
+        tools:layout="@layout/fragment_create_route" />
+    <fragment
+        android:id="@+id/chooseRouteFragment"
+        android:name="com.example.quadroople.ChooseRouteFragment"
+        android:label="fragment_choose_route_list"
+        tools:layout="@layout/fragment_choose_route_list" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.quadroople.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+</navigation>
