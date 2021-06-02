@@ -1,5 +1,7 @@
 package dto;
 
+import java.util.ArrayList;
+
 public class Route {
 
     int Id;
@@ -8,18 +10,23 @@ public class Route {
     int Creator_id;
     int City_id;
 
-    public static final Route[] routes ={
-            new Route(1,
-                    "Маршрут по досотпримечательностям",
-                    "Самые красивые достопримечательности Астрахани",
-                    1,
-                    1),
-            new Route(2,
-                    "Кофе трип",
-                    "Лучший кофе в городе!",
-                    1,
-                    1)
-    };
+    public static ArrayList<Route> getRoutes(){
+        ArrayList<Route> routes = new ArrayList<>();
+        routes.add(new Route(1,
+                "Маршрут по досотпримечательностям",
+                "Самые красивые достопримечательности Астрахани",
+                1,
+                1));
+        routes.add(new Route(2,
+                "Кофе трип",
+                "Лучший кофе в городе!",
+                1,
+                1));
+
+        return routes;
+    }
+
+
 
     public Route(int id, String name, String description, int creator_id, int city_id) {
         Id = id;

@@ -1,4 +1,4 @@
-package com.example.quadroople;
+package com.example.quadroople.adapters;
 
 
 import androidx.annotation.NonNull;
@@ -6,6 +6,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.quadroople.ChooseRouteFragment;
+import com.example.quadroople.CreateRouteFragment;
+import com.example.quadroople.MapsFragment;
 
 public class TabsAccessorAdapter extends FragmentPagerAdapter {
 

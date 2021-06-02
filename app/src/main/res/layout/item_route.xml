@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/img_route"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_maps"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="6dp"/>
+
+    <TextView
+        android:id="@+id/route_name"
+        android:layout_width="fill_parent"
+        android:layout_height="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/img_route"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_above="@id/route_description"/>
+
+    <TextView
+        android:id="@+id/route_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignWithParentIfMissing="true"
+
+        android:layout_toEndOf="@id/img_route"
+        android:gravity="center_vertical"
+
+         />
+
+</RelativeLayout>

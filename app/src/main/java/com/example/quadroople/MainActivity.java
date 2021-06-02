@@ -1,50 +1,79 @@
 package com.example.quadroople;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.GoogleMap;
+import com.example.quadroople.adapters.TabsAccessorAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends FragmentActivity{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private BottomNavigationView bottomNav;
+    private TabsAccessorAdapter tabsAccessorAdapter;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new MapsFragment()).commit();
+        initFields();
+        viewPager.setAdapter(tabsAccessorAdapter);
+        bottomNav.setOnNavigationItemSelectedListener(this);
+        executeViewPagerListener(viewPager);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+    private void executeViewPagerListener(ViewPager viewPager) {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
-                    switch (item.getItemId()){
-                        case R.id.mapsFragment:
-                            selectedFragment = new MapsFragment();
-                            break;
-                        case R.id.createRouteFragment:
-                            selectedFragment = new CreateRouteFragment();
-                            break;
-                        case R.id.chooseRouteFragment:
-                            selectedFragment = new ChooseRouteFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,
-                            selectedFragment).commit();
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                    return true;
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        bottomNav.getMenu().findItem(R.id.createRouteFragment).setChecked(true);
+                        break;
+                    case 1:
+                        bottomNav.getMenu().findItem(R.id.mapsFragment).setChecked(true);
+                        break;
+                    case 2:
+                        bottomNav.getMenu().findItem(R.id.chooseRouteFragment).setChecked(true);
+                        break;
                 }
-            };
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void initFields() {
+        bottomNav = findViewById(R.id.bottom_navigation);
+        tabsAccessorAdapter = new TabsAccessorAdapter(getSupportFragmentManager());
+        viewPager = findViewById(R.id.main_tabs_pager);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.createRouteFragment:
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.mapsFragment:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.chooseRouteFragment:
+                viewPager.setCurrentItem(2);
+                break;
+        }
+        return true;
+    }
 }
