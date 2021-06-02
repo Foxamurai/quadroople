@@ -10,13 +10,14 @@
         android:label="fragment_create_route"
         tools:layout="@layout/fragment_create_route" />
     <fragment
-        android:id="@+id/chooseRouteFragment"
-        android:name="com.example.quadroople.ChooseRouteFragment"
-        android:label="fragment_choose_route_list"
-        tools:layout="@layout/fragment_choose_route_list" />
-    <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.quadroople.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/chooseRouteFragment"
+        android:name="com.example.quadroople.ChooseRouteFragment"
+        android:label="fragment_choose_route"
+        tools:layout="@layout/fragment_choose_route" />
+
 </navigation>

@@ -15,7 +15,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void onSignIn(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
