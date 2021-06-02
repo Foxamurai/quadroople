@@ -32,7 +32,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignWithParentIfMissing="true"
-
         android:layout_toEndOf="@id/img_route"
         android:gravity="center_vertical"
 
