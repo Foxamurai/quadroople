@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -62,8 +64,11 @@ import static android.content.ContentValues.TAG;
 import static android.content.Context.ACTIVITY_SERVICE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
-public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener,
-        GoogleMap.OnMyLocationClickListener, GoogleMap.OnPolylineClickListener {
+public class MapsFragment extends Fragment implements
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener,
+        GoogleMap.OnPolylineClickListener,
+        GoogleMap.OnInfoWindowClickListener {
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -79,6 +84,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location currentLocation = null;
     private ArrayList<PolylineData> mPolyLinesData = new ArrayList<>();
+    private Marker mSelectedMarker = null;
 
 
     @Override
@@ -128,7 +134,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
             @Override
             public void onComplete(@NonNull Task<android.location.Location> task) {
                 if (task.isSuccessful()) {
-                   currentLocation = task.getResult();
+                    currentLocation = task.getResult();
 
                     startLocationService();
                 }
@@ -168,7 +174,16 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
             @Override
             public void run() {
                 Log.d(TAG, "run: result routes: " + result.routes.length);
+                if (mPolyLinesData.size() > 0) {
+                    for (PolylineData polylineData : mPolyLinesData) {
+                        polylineData.getPolyline().remove();
+                    }
 
+                    mPolyLinesData.clear();
+                    mPolyLinesData = new ArrayList<>();
+                }
+
+                double duration = 999999999;
                 for (DirectionsRoute route : result.routes) {
                     Log.d(TAG, "run: leg: " + route.legs[0].toString());
                     List<com.google.maps.model.LatLng> decodedPath = PolylineEncoding.decode(route.overviewPolyline.getEncodedPath());
@@ -190,6 +205,14 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
                     polyline.setColor(ContextCompat.getColor(getActivity(), R.color.dark_gray));
                     polyline.setClickable(true);
                     mPolyLinesData.add(new PolylineData(polyline, route.legs[0]));
+
+                    double tempDuration = route.legs[0].duration.inSeconds;
+                    if(tempDuration < duration){
+                        duration = tempDuration;
+                        onPolylineClick(polyline);
+                    }
+
+
 
                 }
             }
@@ -319,7 +342,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
         }
 
         LatLngBounds llb = bounds.build();
-
+        map.setOnInfoWindowClickListener(this::onInfoWindowClick);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(llb.getCenter(), 15));
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -365,7 +388,60 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     @Override
     public void onPolylineClick(Polyline polyline) {
-        polyline.setColor(ContextCompat.getColor(getActivity(), R.color.purple_700));
-        polyline.setZIndex(1);
+        int index = 0;
+        for (PolylineData polylineData : mPolyLinesData) {
+            index++;
+            Log.d(TAG, "onPolylineClick: toString: " + polylineData.toString());
+            if (polyline.getId().equals(polylineData.getPolyline().getId())) {
+                polylineData.getPolyline().setColor(ContextCompat.getColor(getActivity(), R.color.purple_700));
+                polylineData.getPolyline().setZIndex(1);
+
+
+
+                LatLng endLocation = new LatLng(
+                        polylineData.getLeg().endLocation.lat,
+                        polylineData.getLeg().endLocation.lng
+
+                );
+
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(endLocation)
+                        .title("Route: №" + index)
+                        .snippet("Distance: " + polylineData.getLeg().distance + " Duration: " + polylineData.getLeg().duration)
+                );
+
+                marker.showInfoWindow();
+            } else {
+                polylineData.getPolyline().setColor(ContextCompat.getColor(getActivity(), R.color.dark_gray));
+                polylineData.getPolyline().setZIndex(0);
+            }
+        }
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        if (marker.getSnippet().equals("This is you")) {
+            marker.hideInfoWindow();
+        } else {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(marker.getSnippet())
+                    .setCancelable(true)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            mSelectedMarker = marker;
+
+                            calculateDirections(marker);
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            final AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 }

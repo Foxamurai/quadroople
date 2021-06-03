@@ -17,12 +17,12 @@ public class Map_point {
 
     public static ArrayList<Map_point> createMapPointsMok() {
         ArrayList<Map_point> map_points = new ArrayList<>();
-        map_points.add(new Map_point(1,"Астраханский кремль","историко-архитектурный комплекс","no", 46.349180 , 48.032032));
-        map_points.add(new Map_point(2,"Братский садик","Парк","no",46.350218,48.035052));
-        map_points.add(new Map_point(3,"Памятник Петру","Набережная","no",46.347231,48.015965));
-        map_points.add(new Map_point(4,"Кристалл","Закажите венские вафли!","no",46.352124, 48.034007 ));
-        map_points.add(new Map_point(5,"Розмарин", "Попробуйте лавандовый раф!","no",46.351797,48.035285 ));
-        map_points.add(new Map_point(6,"Сойка","Приятная кофейня!","no",46.354103,48.034863));
+        map_points.add(new Map_point(1,"Астраханский кремль","историко-архитектурный комплекс","", 46.349180 , 48.032032));
+        map_points.add(new Map_point(2,"Братский садик","Парк","",46.350218,48.035052));
+        map_points.add(new Map_point(3,"Памятник Петру","Набережная","",46.347231,48.015965));
+        map_points.add(new Map_point(4,"Кристалл","Закажите венские вафли!","",46.352124, 48.034007 ));
+        map_points.add(new Map_point(5,"Розмарин", "Попробуйте лавандовый раф!","",46.351797,48.035285 ));
+        map_points.add(new Map_point(6,"Сойка","Приятная кофейня!","",46.354103,48.034863));
 
         return map_points;
     }
