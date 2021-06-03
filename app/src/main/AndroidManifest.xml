@@ -30,9 +30,17 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".AddPointsMapActivity"
-            android:label="@string/title_activity_add_points_map"></activity>
+            android:label="@string/title_activity_add_points_map" />
         <activity android:name=".AnekActivity" />
         <activity
             android:name=".MainActivity"
@@ -45,6 +53,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="services.LocationService"
+            android:stopWithTask="true" />
     </application>
 
 </manifest>
