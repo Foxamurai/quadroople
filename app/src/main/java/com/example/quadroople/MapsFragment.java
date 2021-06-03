@@ -49,6 +49,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap map;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,8 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
             enableMyLocation();
             map.getUiSettings().setMyLocationButtonEnabled(true);
+
+
         }
     };
 
@@ -183,7 +186,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMyLocationButt
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(getActivity(), "MyLocation button clicked", Toast.LENGTH_SHORT)
+        Toast.makeText(getActivity(), "You are here!", Toast.LENGTH_SHORT)
                 .show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
