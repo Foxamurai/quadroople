@@ -30,6 +30,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity
+            android:name=".AddPointsMapActivity"
+            android:label="@string/title_activity_add_points_map"></activity>
         <activity android:name=".AnekActivity" />
         <activity
             android:name=".MainActivity"

@@ -1,8 +1,13 @@
 package dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Route {
+public class Route implements Serializable {
+
+    public static int IdCounter = 2;
+
+    public static ArrayList<Route> createdRoutes = createRoutesMok();
 
     int Id;
     String Name;
@@ -11,9 +16,13 @@ public class Route {
     int City_id;
 
     public static ArrayList<Route> getRoutes(){
+        return createdRoutes;
+    }
+
+    public static ArrayList<Route> createRoutesMok(){
         ArrayList<Route> routes = new ArrayList<>();
         routes.add(new Route(1,
-                "Маршрут по досотпримечательностям",
+                "Маршрут по достопримечательностям",
                 "Самые красивые достопримечательности Астрахани",
                 1,
                 1));
@@ -25,6 +34,8 @@ public class Route {
 
         return routes;
     }
+
+
 
 
 
